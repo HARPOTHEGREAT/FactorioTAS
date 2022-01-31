@@ -50,15 +50,16 @@ local function advance_frame()
         end]]--
     current_tick = game.tick
     game.print("Initial current_tick is " .. current_tick)
-    game.print("Initial game_tick is " .. game.tick)
+    game.print("Initial game.tick is " .. game.tick)
     repeat
         game.tick_paused = false
         game.print("current_tick is " .. current_tick)
-        game.print("game_tick is " .. game.tick)
+        game.print("game.tick is " .. game.tick)
+        break
     until (game.tick > current_tick)
     game.tick_paused = true
     game.print("Final current_tick is " .. current_tick)
-    game.print("Final game_tick is " .. game.tick)
+    game.print("Final game.tick is " .. game.tick)
     end
 
 script.on_event(defines.events.on_gui_click, function(event) --listen for all gui clicks
