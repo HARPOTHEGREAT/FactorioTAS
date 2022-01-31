@@ -14,7 +14,6 @@ script.on_event(defines.events.on_player_created, function(event)
     local tas_frame = screen_element.add{type="frame", name="tas_main_frame", caption={"tas.tas_gui"}} --initialize frame
     tas_frame.style.size = {385, 165} --set frame size (edit later)
     tas_frame.auto_center = false --make sure frame does not cover character
-    tas_frame.visible = false --so I can see the character for now
         
     local content_frame = tas_frame.add{type="frame", name="content_frame", direction="vertical", style="tas_content_frame"} --set frame style
     local controls_flow = content_frame.add{type="flow", name="controls_flow", direction="horizontal", style="tas_controls_flow"} --set subframe style
@@ -38,5 +37,13 @@ script.on_event('tas-tools:frame-advance', function(e)
     if game.tick_paused then
         game.ticks_to_run = 1
     else
+        end
+    end)
+
+script.on_event('tas-tools:toggle-input-display', function(e)
+    if tas_frame.visible then
+        tas_frame.visible = false
+    else
+        tas_frame.visible = true
         end
     end)
