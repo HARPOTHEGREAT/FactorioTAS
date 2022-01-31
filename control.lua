@@ -51,11 +51,11 @@ local function advance_frame()
     current_tick = game.tick
     game.print("Initial current_tick is " .. current_tick)
     game.print("Initial game_tick is " .. game.tick)
-    while(game.tick == current_tick) do
+    repeat
         game.tick_paused = false
         game.print("current_tick is " .. current_tick)
         game.print("game_tick is " .. game.tick)
-        end
+    until (game.tick > current_tick)
     game.tick_paused = true
     game.print("Final current_tick is " .. current_tick)
     game.print("Final game_tick is " .. game.tick)
