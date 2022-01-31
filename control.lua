@@ -1,5 +1,4 @@
 -- Make sure the intro cinematic of freeplay doesn't play every time we restart
--- This is just for convenience, don't worry if you don't understand how this works
 script.on_init(function()
     local freeplay = remote.interfaces["freeplay"]
     if freeplay then  -- Disable freeplay popup-message
@@ -11,17 +10,17 @@ end)
 script.on_event(defines.events.on_player_created, function(event)
     local player = game.get_player(event.player_index)
 
-    local screen_element = player.gui.screen
-    local main_frame = screen_element.add{type="frame", name="tas_main_frame", caption={"tas.tas_gui"}}
-    main_frame.style.size = {385, 165}
-    main_frame.auto_center = true
-    main_frame.visible = false --so I can see the character for now
+    local screen_element = player.gui.screen --create tas interface panel
+    local tas_frame = screen_element.add{type="frame", name="tas_main_frame", caption={"tas.tas_gui"}} --initialize frame
+    tas_frame.style.size = {385, 165} --set frame size (edit later)
+    tas_frame.auto_center = false --make sure frame does not cover character
+    tas_frame.visible = false --so I can see the character for now
         
-    local content_frame = main_frame.add{type="frame", name="content_frame", direction="vertical", style="tas_content_frame"}
-    local controls_flow = content_frame.add{type="flow", name="controls_flow", direction="horizontal", style="tas_controls_flow"}
+    local content_frame = tas_frame.add{type="frame", name="content_frame", direction="vertical", style="tas_content_frame"} --set frame style
+    local controls_flow = content_frame.add{type="flow", name="controls_flow", direction="horizontal", style="tas_controls_flow"} --set subframe style
 
-    controls_flow.add{type="button", name="tas_pause_toggle", caption={"tas.pause"}}
-    controls_flow.add{type="button", name="tas_tickadv", caption={"tas.tickadv"}}
+    controls_flow.add{type="button", name="tas_pause_toggle", caption={"tas.pause"}} --add button to pause/unpause
+    controls_flow.add{type="button", name="tas_tickadv", caption={"tas.tickadv"}} --add button to advance one tick while paused
 end)
 
 
