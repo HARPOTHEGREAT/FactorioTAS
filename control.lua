@@ -47,7 +47,7 @@ script.on_event('tas-tools:pause-unpause', function(e)
     else
         game.tick_paused = false
         end
-    end
+    end)
 
 script.on_event('tas-tools:frame-advance', function(e)
     if game.tick_paused then
