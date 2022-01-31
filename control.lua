@@ -45,9 +45,9 @@ script.on_event(defines.events.on_gui_click, function(event) --listen for all gu
 end)
 
 local function advance_frame()
-    --local is_walking = game.player.walking_state
-    
-    local walking_direction = game.player.walking_state[direction]
+    player = game.players[1]
+    local is_walking = player.walking_state[1]
+    local walking_direction = game.player.walking_state[2]
     if is_walking then
         game.ticks_to_run = 1
         game.player.walking_state = {walking = true, direction = walking_direction}
