@@ -19,6 +19,6 @@ script.on_event(defines.events.on_player_created, function(event)
     local content_frame = main_frame.add{type="frame", name="content_frame", direction="vertical", style="tas_content_frame"}
     local controls_flow = content_frame.add{type="flow", name="controls_flow", direction="horizontal", style="tas_controls_flow"}
 
-    controls_flow.add{type="button", name="tas_pause_toggle", caption={"Pause"}}
-    controls_flow.add{type="button", name="tas_tickadv", caption={"Advance Tick"}}
+    controls_flow.add{type="button", name="tas_pause_toggle", caption={"tas_pause"}}
+    controls_flow.add{type="button", name="tas_tickadv", caption={"tas_tickadv"}}
 end)
