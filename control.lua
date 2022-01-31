@@ -56,10 +56,16 @@ local function advance_frame()
     else
         end]]--
     current_tick = game.tick
+    game.print("Initial current_tick is " .. current_tick)
+    game.print("Initial game_tick is " .. game_tick)
     while(current_tick == game.tick) do
         game.tick_paused = false
+        game.print("current_tick is " .. current_tick)
+        game.print("game_tick is " .. game_tick)
         end
     game.tick_paused = true
+    game.print("Final current_tick is " .. current_tick)
+    game.print("Final game_tick is " .. game_tick)
     end
 
 script.on_event('tas-tools:pause-unpause', function(e) --pause/unpause on hotkey press
