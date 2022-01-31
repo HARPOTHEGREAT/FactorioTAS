@@ -37,10 +37,12 @@ local function pause_toggle() --pause game if unpaused, unpause game if paused
     controls_flow.tas_tickadv.enabled = game.tick_paused --disable tick advance if unpaused
 end
 
-script.on_event(defines.events.on_gui_click, function(event) --listen for all gui clicks (this is just how it works)
-    if event.element.name == "tas_pause_toggle" then --check if the gui click was for the pause button (again, this is just how it needs to work)
-        local tas_pause_toggle = event.element
+script.on_event(defines.events.on_gui_click, function(event) --listen for all gui clicks
+    if event.element.name == "tas_pause_toggle" then --check if the gui click was for the pause button
         pause_toggle()
+    end
+        if event.element.name == "tas_tickadv" then --check if the gui click was for the tick advance button
+        advance frame()
     end
 end)
 
@@ -57,15 +59,15 @@ local function advance_frame()
         end]]--
     current_tick = game.tick
     game.print("Initial current_tick is " .. current_tick)
-    game.print("Initial game_tick is " .. game_tick)
+    game.print("Initial game_tick is " .. game.tick)
     while(current_tick == game.tick) do
         game.tick_paused = false
         game.print("current_tick is " .. current_tick)
-        game.print("game_tick is " .. game_tick)
+        game.print("game_tick is " .. game.tick)
         end
     game.tick_paused = true
     game.print("Final current_tick is " .. current_tick)
-    game.print("Final game_tick is " .. game_tick)
+    game.print("Final game_tick is " .. game.tick)
     end
 
 script.on_event('tas-tools:pause-unpause', function(e) --pause/unpause on hotkey press
