@@ -26,7 +26,8 @@ end)
 local function pause_toggle() --pause game if unpaused, unpause game if paused
     if not game.tick_paused then
         game.tick_paused = true
-        for _, p in pairs(game.player.walking_state) do game.print(p); end
+        player = game.players[0]
+        for _, a in pairs(player.walking_state) do game.print(a); end
     else
         game.tick_paused = false
         end
