@@ -17,7 +17,7 @@ script.on_event(defines.events.on_player_created, function(event) --create tas i
     tas_frame.auto_center = false --make sure frame does not cover character
     
     content_frame = tas_frame.add{type="frame", name="content_frame", direction="vertical", style="tas_content_frame"} --set frame style
-    controls_flow = content_frame.add{type="flow", name="controls_flow", direction="horizontal", style="tas_controls_flow"} --set subframe style
+    controls_flow = content_frame.add{type="flow", name="controls_flow", direction="horizontal", style="tas_controls_flow"} --set flow style
 
     controls_flow.add{type="button", name="tas_pause_toggle", caption={"tas.pause"}} --add button to pause/unpause
     controls_flow.add{type="button", name="tas_tickadv", caption={"tas.tickadv"}} --add button to advance one tick while paused
@@ -31,7 +31,7 @@ local function pause_toggle() --pause game if unpaused, unpause game if paused
     else
         game.tick_paused = false
         end
-        screen_element.frame.flow.tas_pause_toggle.caption = (game.tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
+        screen_element.frame.frame.flow.tas_pause_toggle.caption = (game.tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
     end
 
 script.on_event(defines.events.on_gui_click, function(event) --listen for all gui clicks (this is just how it works)
