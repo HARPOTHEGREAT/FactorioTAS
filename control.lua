@@ -5,6 +5,7 @@ script.on_init(function()
         if freeplay["set_skip_intro"] then remote.call("freeplay", "set_skip_intro", true) end
         if freeplay["set_disable_crashsite"] then remote.call("freeplay", "set_disable_crashsite", true) end
     end
+    global.players = {}
 end)
 
 script.on_event(defines.events.on_player_created, function(event)
@@ -23,9 +24,10 @@ script.on_event(defines.events.on_player_created, function(event)
 end)
 
 script.on_event(defines.events.on_gui_click, function(event) --listen for all gui clicks (this is just how it works)
-    if event.element.name == "tas_pause" then --check if the gui click was for the pause button (again, this is just how it needs to work)
+    if event.element.name == "tas_pause_toggle" then --check if the gui click was for the pause button (again, this is just how it needs to work)
         
         local control_toggle = event.element
+            
         tas_pause_toggle.caption = (tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
     end
 end)
