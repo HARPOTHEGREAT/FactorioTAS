@@ -39,7 +39,7 @@ local function pause_toggle() --pause game if unpaused, unpause game if paused
     else
         game.tick_paused = false
         end
-    tas_pause_toggle.caption = (game.tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
+    controls_flow.tas_pause_toggle.caption = (game.tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
     end
 
 local function advance_frame(e)
