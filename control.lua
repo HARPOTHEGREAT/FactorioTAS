@@ -8,10 +8,10 @@ script.on_init(function()
     global.players = {} --initialize a table in global for each player
 end)
 
-script.on_event(defines.events.on_player_created, function(event)
+script.on_event(defines.events.on_player_created, function(event) --create tas interface panel on character creation
     local player = game.get_player(event.player_index)
 
-    screen_element = player.gui.screen --create tas interface panel
+    screen_element = player.gui.screen
     tas_frame = screen_element.add{type="frame", name="tas_main_frame", caption={"tas.tas_gui"}} --initialize frame
     tas_frame.style.size = {385, 165} --set frame size (edit later)
     tas_frame.auto_center = false --make sure frame does not cover character
@@ -31,7 +31,7 @@ local function pause_toggle() --pause game if unpaused, unpause game if paused
     else
         game.tick_paused = false
         end
-        screen_element.tas_frame.content_frame.controls_flow.tas_pause_toggle.caption = (game.tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
+        screen_element.frame.flow.tas_pause_toggle.caption = (game.tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
     end
 
 script.on_event(defines.events.on_gui_click, function(event) --listen for all gui clicks (this is just how it works)
