@@ -3,6 +3,7 @@ data:extend({
     {
       type = 'custom-input',
       name = 'tas-tools:pause-unpause',
+      linked_game_control = 'toggle_entity_paused',
       consuming = nil,
       key_sequence = '',
       },
@@ -10,6 +11,7 @@ data:extend({
     {
       type = 'custom-input',
       name = 'tas-tools:frame-advance',
+      linked_game_control = 'tick_once',
       consuming = nil,
       key_sequence = '',
       },
