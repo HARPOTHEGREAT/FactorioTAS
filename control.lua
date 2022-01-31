@@ -38,6 +38,7 @@ local function pause_toggle() --pause game if unpaused, unpause game if paused
     else
         game.tick_paused = false
         end
+    end
 
 local function advance_frame(e)
     local player = game.get_player(e.player_index)
