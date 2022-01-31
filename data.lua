@@ -1,25 +1,3 @@
-data:extend({
-    
-    {
-      type = 'custom-input',
-      name = 'tas-tools:pause-unpause',
-      consuming = nil,
-      },
-    
-    {
-      type = 'custom-input',
-      name = 'tas-tools:frame-advance',
-      consuming = nil,
-      },
-    
-    {
-      type = 'custom-input',
-      name = 'tas-tools:toggle-input-display',
-      consuming = nil,
-      },
-    
-    })
-
 local styles = data.raw["gui-style"].default
 
 styles["tas_content_frame"] = {
