@@ -15,6 +15,7 @@ script.on_event(defines.events.on_player_created, function(event)
     local main_frame = screen_element.add{type="frame", name="tas_main_frame"}
     main_frame.style.size = {385, 165}
     main_frame.auto_center = true
+    main_frame.visible = false --so I can see the character for now
         
     local content_frame = main_frame.add{type="frame", name="content_frame", direction="vertical", style="tas_content_frame"}
     local controls_flow = content_frame.add{type="flow", name="controls_flow", direction="horizontal", style="tas_controls_flow"}
