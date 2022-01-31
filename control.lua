@@ -8,6 +8,16 @@ script.on_init(function()
     global.players = {} --initialize a table in global for each player
 end)
 
+local function pause_toggle() --pause game if unpaused, unpause game if paused
+    if not game.tick_paused then
+        game.tick_paused = true
+        for _, p in pairs(game.players) do game.print(p.name); end
+    else
+        game.tick_paused = false
+        end
+    controls_flow.tas_pause_toggle.caption = (game.tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
+    end
+
 script.on_event(defines.events.on_player_created, function(event)
     local player = game.get_player(event.player_index)
 
@@ -31,16 +41,6 @@ script.on_event(defines.events.on_gui_click, function(event) --listen for all gu
         
     end
 end)
-
-local function pause_toggle() --pause game if unpaused, unpause game if paused
-    if not game.tick_paused then
-        game.tick_paused = true
-        for _, p in pairs(game.players) do game.print(p.name); end
-    else
-        game.tick_paused = false
-        end
-    controls_flow.tas_pause_toggle.caption = (game.tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
-    end
 
 local function advance_frame(e)
     local player = game.get_player(e.player_index)
