@@ -28,8 +28,8 @@ end)
 
 script.on_event('tas-tools:pause-unpause', function(e)
     if not game.tick-paused then
-        game.tick-paused = true
+        game.tick_paused = true
     else
-        game.tick-paused = false
+        game.tick_paused = false
         end
     end)
