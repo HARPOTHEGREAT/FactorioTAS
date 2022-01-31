@@ -28,7 +28,7 @@ script.on_event(defines.events.on_gui_click, function(event) --listen for all gu
         
         local tas_pause_toggle = event.element
         pause_toggle()
-        tas_pause_toggle.caption = (tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
+        
     end
 end)
 
@@ -52,8 +52,9 @@ local function advance_frame(e)
         end
     end
 
-script.on_event('tas-tools:pause-unpause', function(e) --pause/unpause on hotkey press
-    pause_toggle()
+script.on_event('tas-tools:pause-unpause', function(e)
+    pause_toggle() --pause/unpause on hotkey press
+    tas_pause_toggle.caption = (tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
     end)
 
 script.on_event('tas-tools:frame-advance', function(e)
