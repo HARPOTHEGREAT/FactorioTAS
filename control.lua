@@ -12,15 +12,16 @@ script.on_event(defines.events.on_player_created, function(event) --create tas i
     local player = game.get_player(event.player_index)
 
     screen_element = player.gui.screen
-    tas_frame = screen_element.add{type="frame", name="tas_main_frame", caption={"tas.tas_gui"}} --initialize frame
+    local tas_frame = screen_element.add{type="frame", name="tas_main_frame", caption={"tas.tas_gui"}} --initialize frame
     tas_frame.style.size = {385, 165} --set frame size (edit later)
     tas_frame.auto_center = false --make sure frame does not cover character
     
-    content_frame = tas_frame.add{type="frame", name="content_frame", direction="vertical", style="tas_content_frame"} --set frame style
-    controls_flow = content_frame.add{type="flow", name="controls_flow", direction="horizontal", style="tas_controls_flow"} --set flow style
+    local content_frame = tas_frame.add{type="frame", name="content_frame", direction="vertical", style="tas_content_frame"} --set frame style
+    local controls_flow = content_frame.add{type="flow", name="controls_flow", direction="horizontal", style="tas_controls_flow"} --set flow style
 
     controls_flow.add{type="button", name="tas_pause_toggle", caption={"tas.pause"}} --add button to pause/unpause
     controls_flow.add{type="button", name="tas_tickadv", caption={"tas.tickadv"}} --add button to advance one tick while paused
+    controls_flow.tickadv.enabled = false
 end)
 
 local function pause_toggle() --pause game if unpaused, unpause game if paused
@@ -30,18 +31,16 @@ local function pause_toggle() --pause game if unpaused, unpause game if paused
         for _, a in pairs(player.walking_state) do game.print(a); end
     else
         game.tick_paused = false
-        end
-        local controls_flow = player.gui.screen.tas_main_frame.content_frame.controls_flow
-        controls_flow.tas_pause_toggle.caption = (game.tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
-        controls_flow.tas_tickadv.enabled = game.tick_paused --toggle if tick advance can be clicked, move to pause_toggle when complete
     end
+    local controls_flow = player.gui.screen.tas_main_frame.content_frame.controls_flow
+    controls_flow.tas_pause_toggle.caption = (game.tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
+    controls_flow.tas_tickadv.enabled = game.tick_paused --disable tick advance if unpaused
+end
 
 script.on_event(defines.events.on_gui_click, function(event) --listen for all gui clicks (this is just how it works)
     if event.element.name == "tas_pause_toggle" then --check if the gui click was for the pause button (again, this is just how it needs to work)
         local tas_pause_toggle = event.element
         pause_toggle()
-        local controls_flow = player.gui.screen.tas_main_frame.content_frame.controls_flow
-        controls_flow.tas_tickadv.enabled = tickadv_active --toggle if tick advance can be clicked, move to pause_toggle when complete
     end
 end)
 
