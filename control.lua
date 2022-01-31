@@ -26,7 +26,7 @@ end)
 
 
 
-script.on_event('tas-tools:pause-unpause'
+script.on_event('tas-tools:pause-unpause',
     if not tick-paused then
         tick-paused = true
     else
