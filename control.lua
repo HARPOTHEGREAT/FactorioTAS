@@ -30,6 +30,7 @@ local function pause_toggle() --pause game if unpaused, unpause game if paused
     else
         game.tick_paused = false
         end
+        tas_pause_toggle.caption = (game.tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
     end
 
 script.on_event(defines.events.on_gui_click, function(event) --listen for all gui clicks (this is just how it works)
@@ -37,7 +38,7 @@ script.on_event(defines.events.on_gui_click, function(event) --listen for all gu
         
         local tas_pause_toggle = event.element
         pause_toggle()
-        tas_pause_toggle.caption = (game.tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
+        --tas_pause_toggle.caption = (game.tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
         
     end
 end)
