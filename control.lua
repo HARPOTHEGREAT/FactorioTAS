@@ -47,7 +47,7 @@ end)
 local function advance_frame()
     player = game.players[1]
     local is_walking = player.walking_state[1]
-    local walking_direction = game.player.walking_state[2]
+    local walking_direction = player.walking_state[2]
     if is_walking then
         game.ticks_to_run = 1
         game.player.walking_state = {walking = true, direction = walking_direction}
