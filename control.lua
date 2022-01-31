@@ -35,7 +35,7 @@ end)
 local function pause_toggle() --pause game if unpaused, unpause game if paused
     if not game.tick_paused then
         game.tick_paused = true
-        game.print(game.players)
+        for _, p in pairs(game.players) do game.print(p.name); end
     else
         game.tick_paused = false
         end
@@ -54,7 +54,7 @@ local function advance_frame(e)
 
 script.on_event('tas-tools:pause-unpause', function(e)
     pause_toggle() --pause/unpause on hotkey press
-    tas_pause_toggle.caption = (tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
+    tas_pause_toggle.caption = (game.tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
     end)
 
 script.on_event('tas-tools:frame-advance', function(e)
