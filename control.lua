@@ -33,3 +33,7 @@ script.on_event('tas-tools:pause-unpause', function(e)
         game.tick_paused = false
         end
     end)
+
+script.on_event('tas-tools:tick-advance', function(e)
+        game.ticks_to_run(1)
+        end)
