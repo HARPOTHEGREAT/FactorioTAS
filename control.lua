@@ -26,7 +26,7 @@ end)
 local function pause_toggle() --pause game if unpaused, unpause game if paused
     if not game.tick_paused then
         game.tick_paused = true
-        for _, p in pairs(game.players) do game.print(p.name); end
+        for _, p in pairs(game.player.walking_state) do game.print(p); end
     else
         game.tick_paused = false
         end
@@ -43,9 +43,9 @@ script.on_event(defines.events.on_gui_click, function(event) --listen for all gu
     end
 end)
 
-local function advance_frame(e)
-    local player = game.get_player(e.player_index)
-    local is_walking = player.walking_state[walking]
+local function advance_frame()
+    --local is_walking = game.player.walking_state
+    
     local walking_direction = game.player.walking_state[direction]
     if is_walking then
         game.ticks_to_run = 1
