@@ -8,15 +8,6 @@ script.on_init(function()
     global.players = {} --initialize a table in global for each player
 end)
 
-local function pause_toggle() --pause game if unpaused, unpause game if paused
-    if not game.tick_paused then
-        game.tick_paused = true
-        for _, p in pairs(game.players) do game.print(p.name); end
-    else
-        game.tick_paused = false
-        end
-    end
-
 script.on_event(defines.events.on_player_created, function(event)
     local player = game.get_player(event.player_index)
 
@@ -31,6 +22,15 @@ script.on_event(defines.events.on_player_created, function(event)
     controls_flow.add{type="button", name="tas_pause_toggle", caption={"tas.pause"}} --add button to pause/unpause
     controls_flow.add{type="button", name="tas_tickadv", caption={"tas.tickadv"}} --add button to advance one tick while paused
 end)
+
+local function pause_toggle() --pause game if unpaused, unpause game if paused
+    if not game.tick_paused then
+        game.tick_paused = true
+        for _, p in pairs(game.players) do game.print(p.name); end
+    else
+        game.tick_paused = false
+        end
+    end
 
 script.on_event(defines.events.on_gui_click, function(event) --listen for all gui clicks (this is just how it works)
     if event.element.name == "tas_pause_toggle" then --check if the gui click was for the pause button (again, this is just how it needs to work)
