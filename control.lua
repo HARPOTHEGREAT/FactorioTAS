@@ -27,8 +27,7 @@ end)
 
 
 script.on_event('tas-tools:pause-unpause', function(e)
-    local pause-state = game.tick-paused
-    if not pause-state then
+    if not game.tick-paused then
         game.tick-paused = true
     else
         game.tick-paused = false
