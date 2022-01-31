@@ -25,17 +25,27 @@ end)
 
 
 
+local function advance_frame()
+    local is_walking = game.player.walking_state[walking]
+    local walking_direction = game.player.walking_state[direction]
+    if is_walking then
+        game.ticks_to_run = 1
+        game.player.walking_state = {walking = true, direction = walking_direction}
+    else
+        end
+    end
+
 script.on_event('tas-tools:pause-unpause', function(e)
     if not game.tick_paused then
         game.tick_paused = true
     else
         game.tick_paused = false
         end
-    end)
+    end
 
 script.on_event('tas-tools:frame-advance', function(e)
     if game.tick_paused then
-        game.ticks_to_run = 1
+        advance_frame()
     else
         end
     end)
