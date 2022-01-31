@@ -39,6 +39,7 @@ local function pause_toggle() --pause game if unpaused, unpause game if paused
     else
         game.tick_paused = false
         end
+    tas_pause_toggle.caption = (game.tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
     end
 
 local function advance_frame(e)
@@ -52,9 +53,8 @@ local function advance_frame(e)
         end
     end
 
-script.on_event('tas-tools:pause-unpause', function(e)
-    pause_toggle() --pause/unpause on hotkey press
-    tas_pause_toggle.caption = (game.tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
+script.on_event('tas-tools:pause-unpause', function(e) --pause/unpause on hotkey press
+    pause_toggle()
     end)
 
 script.on_event('tas-tools:frame-advance', function(e)
