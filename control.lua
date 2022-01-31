@@ -35,7 +35,7 @@ end)
 local function pause_toggle() --pause game if unpaused, unpause game if paused
     if not game.tick_paused then
         game.tick_paused = true
-        print(game.players)
+        game.print(game.players)
     else
         game.tick_paused = false
         end
