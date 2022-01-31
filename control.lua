@@ -46,7 +46,7 @@ script.on_event(defines.events.on_gui_click, function(event) --listen for all gu
 end)
 
 local function advance_frame()
-    player = game.players[1]
+    --[[player = game.players[1]
     local is_walking = player.walking_state[1]
     game.print(is_walking)
     local walking_direction = player.walking_state[2]
@@ -55,7 +55,12 @@ local function advance_frame()
         game.player.walking_state = {walking = true, direction = walking_direction}
         game.ticks_to_run = 1
     else
+        end]]--
+    current_tick = game.tick
+    while(current_tick == game.tick) do
+        game.tick_paused = false
         end
+    game.tick_paused = true
     end
 
 script.on_event('tas-tools:pause-unpause', function(e) --pause/unpause on hotkey press
