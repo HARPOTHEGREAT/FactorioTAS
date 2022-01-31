@@ -3,24 +3,22 @@ data:extend({
     {
       type = 'custom-input',
       name = 'tas-tools:pause-unpause',
-      linked_game_control = 'toggle_entity_paused',
       consuming = nil,
-      key_sequence = '',
+      key_sequence = 'KP_0',
       },
     
     {
       type = 'custom-input',
       name = 'tas-tools:frame-advance',
-      linked_game_control = 'tick_once',
       consuming = nil,
-      key_sequence = '',
+      key_sequence = 'KP_PERIOD',
       },
     
     {
       type = 'custom-input',
       name = 'tas-tools:toggle-input-display',
       consuming = nil,
-      key_sequence = '',
+      key_sequence = 'KP_ENTER',
       },
     
     })
