@@ -22,24 +22,24 @@ data:extend({
 
 local styles = data.raw["gui-style"].default
 
-styles["ugg_content_frame"] = {
+styles["tas_content_frame"] = {
     type = "frame_style",
     parent = "inside_shallow_frame_with_padding",
     vertically_stretchable = "on"
 }
 
-styles["ugg_controls_flow"] = {
+styles["tas_controls_flow"] = {
     type = "horizontal_flow_style",
     vertical_align = "center",
     horizontal_spacing = 16
 }
 
-styles["ugg_controls_textfield"] = {
+styles["tas_controls_textfield"] = {
     type = "textbox_style",
     width = 36
 }
 
-styles["ugg_deep_frame"] = {
+styles["tas_deep_frame"] = {
     type = "frame_style",
     parent = "slot_button_deep_frame",
     vertically_stretchable = "on",
