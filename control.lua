@@ -42,7 +42,7 @@ script.on_event(defines.events.on_gui_click, function(event) --listen for all gu
         pause_toggle()
     end
         if event.element.name == "tas_tickadv" then --check if the gui click was for the tick advance button
-        advance frame()
+        advance_frame()
     end
 end)
 
