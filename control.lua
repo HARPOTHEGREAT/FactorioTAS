@@ -5,7 +5,7 @@ script.on_init(function()
         if freeplay["set_skip_intro"] then remote.call("freeplay", "set_skip_intro", true) end
         if freeplay["set_disable_crashsite"] then remote.call("freeplay", "set_disable_crashsite", true) end
     end
-    global.players = {}
+    global.players = {} --initialize a table in global for each player
 end)
 
 script.on_event(defines.events.on_player_created, function(event)
@@ -26,12 +26,18 @@ end)
 script.on_event(defines.events.on_gui_click, function(event) --listen for all gui clicks (this is just how it works)
     if event.element.name == "tas_pause_toggle" then --check if the gui click was for the pause button (again, this is just how it needs to work)
         
-        local control_toggle = event.element
-            
+        local tas_pause_toggle = event.element
+        pause_toggle()
         tas_pause_toggle.caption = (tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
     end
 end)
 
+local function pause_toggle() --pause game if unpaused, unpause game if paused
+    if not game.tick_paused then
+        game.tick_paused = true
+    else
+        game.tick_paused = false
+        end
 
 local function advance_frame(e)
     local player = game.get_player(e.player_index)
@@ -44,12 +50,8 @@ local function advance_frame(e)
         end
     end
 
-script.on_event('tas-tools:pause-unpause', function(e)
-    if not game.tick_paused then
-        game.tick_paused = true
-    else
-        game.tick_paused = false
-        end
+script.on_event('tas-tools:pause-unpause', function(e) --pause/unpause on hotkey press
+    pause_toggle()
     end)
 
 script.on_event('tas-tools:frame-advance', function(e)
