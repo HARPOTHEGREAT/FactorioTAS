@@ -11,7 +11,7 @@ script.on_event(defines.events.on_player_created, function(event)
     local player = game.get_player(event.player_index)
 
     local screen_element = player.gui.screen --create tas interface panel
-    local tas_frame = screen_element.add{type="frame", name="tas_main_frame", caption={"tas.tas_gui"}} --initialize frame
+    tas_frame = screen_element.add{type="frame", name="tas_main_frame", caption={"tas.tas_gui"}} --initialize frame
     tas_frame.style.size = {385, 165} --set frame size (edit later)
     tas_frame.auto_center = false --make sure frame does not cover character
         
