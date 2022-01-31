@@ -21,7 +21,7 @@ script.on_event(defines.events.on_player_created, function(event) --create tas i
 
     controls_flow.add{type="button", name="tas_pause_toggle", caption={"tas.pause"}} --add button to pause/unpause
     controls_flow.add{type="button", name="tas_tickadv", caption={"tas.tickadv"}} --add button to advance one tick while paused
-    controls_flow.tickadv.enabled = false
+    controls_flow.tas_tickadv.enabled = false
 end)
 
 local function pause_toggle() --pause game if unpaused, unpause game if paused
