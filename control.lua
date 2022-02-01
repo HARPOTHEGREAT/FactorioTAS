@@ -74,6 +74,7 @@ local function advance_frame()
     ]]--
     
     game.ticks_to_run = 2
+    game.print("game.tick is " .. game.tick)
     end
 
 script.on_event(defines.events.on_gui_click, function(event) --listen for all gui clicks
