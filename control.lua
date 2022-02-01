@@ -48,14 +48,17 @@ local function advance_frame()
         game.ticks_to_run = 1
     else
         end]]--
-    current_tick = game.tick
+    local current_tick = game.tick --define current_tick as the current game.tick
     game.print("Initial current_tick is " .. current_tick)
     game.print("Initial game.tick is " .. game.tick)
-    repeat
-        game.tick_paused = false
-        game.print("current_tick is " .. current_tick)
-        game.print("game.tick is " .. game.tick)
-        break
+    repeat --loop that unpauses game for one tick
+        if (game.tick == current_tick) then --check for if no ticks have passed
+            game.tick_paused = false
+            game.print("current_tick is " .. current_tick)
+            game.print("game.tick is " .. game.tick)
+        else -- break if ticks have passed
+            break
+            end
     until (game.tick > current_tick)
     game.tick_paused = true
     game.print("Final current_tick is " .. current_tick)
