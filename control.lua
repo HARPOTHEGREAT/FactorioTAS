@@ -6,9 +6,11 @@ script.on_init(function()
         if freeplay["set_disable_crashsite"] then remote.call("freeplay", "set_disable_crashsite", true) end
     end
     global.players = {} --initialize a table in global for each player
+    current_tick = 0 --initialize current_tick for use in advance_frame
 end)
 
-script.on_event(defines.events.on_player_created, function(event) --create tas interface panel on character creation
+--create tas interface panel on character creation
+script.on_event(defines.events.on_player_created, function(event)
     local player = game.get_player(event.player_index)
 
     screen_element = player.gui.screen
@@ -24,7 +26,9 @@ script.on_event(defines.events.on_player_created, function(event) --create tas i
     controls_flow.tas_tickadv.enabled = false
 end)
 
-local function pause_toggle() --pause game if unpaused, unpause game if paused
+--pause game if unpaused, unpause game if paused
+local function pause_toggle()
+    --when game.tick_paused is set to false, the next tick has no player movement
     if not game.tick_paused then
         game.tick_paused = true
         player = game.players[1]
@@ -46,23 +50,25 @@ local function advance_frame()
     game.print(walking_direction)
     if is_walking then
         game.player.walking_state = {walking = true, direction = walking_direction}
-        game.ticks_to_run = 1
+        game.ticks_to_run = 1 --setting this to 2 kina works, first tick still has no movement
     else
         end
     ]]--
     
     --[[
-    local current_tick = game.tick --define current_tick as the current game.tick
+    current_tick = game.tick --define current_tick as the current game.tick
     game.print("Initial current_tick is " .. current_tick)
     game.print("Initial game.tick is " .. game.tick)
     
-    -- Zero game ticks elapse during execution of this loop, somehow this must be remedied 
-    repeat --loop that unpauses game for one tick
+    --zero game ticks elapse during execution of a loop; the loop will never resolve
+    
+    --loop that unpauses game for one tick
+    repeat
         if (game.tick == current_tick) then --check for if no ticks have passed
             game.tick_paused = false
             game.print("current_tick is " .. current_tick)
             game.print("game.tick is " .. game.tick)
-            break --remove this break later, only here to show no time passes during execution of this loop
+            break --remove this break later, only here to show no time passes during execution of a loop
         else -- break if ticks have passed
             break
             end
@@ -73,8 +79,7 @@ local function advance_frame()
     end
     ]]--
     
-    game.ticks_to_run = 1
-    game.print("game.tick is " .. game.tick)
+    
     end
 
 script.on_event(defines.events.on_gui_click, function(event) --listen for all gui clicks
@@ -88,10 +93,12 @@ end)
 
 -- advance frame moved to line 40, before any button/hotkey event listeners
 
-script.on_event('tas-tools:pause-unpause', function(e) --pause/unpause on hotkey press
+--pause/unpause on hotkey press
+script.on_event('tas-tools:pause-unpause', function(e)
     pause_toggle()
     end)
 
+--call frame_advance on hotkey press
 script.on_event('tas-tools:frame-advance', function(e)
     if game.tick_paused then
         advance_frame()
@@ -99,6 +106,7 @@ script.on_event('tas-tools:frame-advance', function(e)
         end
     end)
 
+--toggle gui on hotkey press
 script.on_event('tas-tools:toggle-input-display', function(e)
     if tas_frame.visible then
         tas_frame.visible = false
