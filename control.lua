@@ -51,6 +51,7 @@ local function advance_frame()
         end
     ]]--
     
+    --[[
     local current_tick = game.tick --define current_tick as the current game.tick
     game.print("Initial current_tick is " .. current_tick)
     game.print("Initial game.tick is " .. game.tick)
@@ -61,7 +62,7 @@ local function advance_frame()
             game.tick_paused = false
             game.print("current_tick is " .. current_tick)
             game.print("game.tick is " .. game.tick)
-            break --remove this break later
+            break --remove this break later, only here to show no time passes during execution of this loop
         else -- break if ticks have passed
             break
             end
@@ -69,6 +70,10 @@ local function advance_frame()
     game.tick_paused = true
     game.print("Final current_tick is " .. current_tick)
     game.print("Final game.tick is " .. game.tick)
+    end
+    ]]--
+    
+    game.ticks_to_run = 2
     end
 
 script.on_event(defines.events.on_gui_click, function(event) --listen for all gui clicks
