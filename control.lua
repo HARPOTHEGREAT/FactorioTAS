@@ -38,7 +38,8 @@ local function pause_toggle() --pause game if unpaused, unpause game if paused
 end
 
 local function advance_frame()
-    --[[player = game.players[1]
+    --[[
+    player = game.players[1]
     local is_walking = player.walking_state[1]
     game.print(is_walking)
     local walking_direction = player.walking_state[2]
@@ -47,15 +48,20 @@ local function advance_frame()
         game.player.walking_state = {walking = true, direction = walking_direction}
         game.ticks_to_run = 1
     else
-        end]]--
+        end
+    ]]--
+    
     local current_tick = game.tick --define current_tick as the current game.tick
     game.print("Initial current_tick is " .. current_tick)
     game.print("Initial game.tick is " .. game.tick)
+    
+    -- Zero game ticks elapse during execution of this loop, somehow this must be remedied 
     repeat --loop that unpauses game for one tick
         if (game.tick == current_tick) then --check for if no ticks have passed
             game.tick_paused = false
             game.print("current_tick is " .. current_tick)
             game.print("game.tick is " .. game.tick)
+            break --remove this break later
         else -- break if ticks have passed
             break
             end
