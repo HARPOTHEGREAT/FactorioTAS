@@ -73,7 +73,7 @@ local function advance_frame()
     end
     ]]--
     
-    game.ticks_to_run = 2
+    game.ticks_to_run = 1
     game.print("game.tick is " .. game.tick)
     end
 
