@@ -107,6 +107,7 @@ end)
 
 --listen for all gui value changes
 script.on_event(defines.events.on_gui_value_changed, function(event)
+    game.print("gui value changed")
     if event.element.name == "tas_controls_slider" then --check if the value change was for the gamespeed slider
         game.print("slider changed")
         local new_speed_value = event.element.slider_value --get updated slider value
@@ -118,6 +119,7 @@ end)
 
 --listen for all gui text edits
 script.on_event(defines.events.on_gui_text_changed, function(event)
+    game.print("gui text changed")
     if event.element.name == "tas_controls_textfield" then --check if the text edit was for the gamespeed textfield
         game.print("textfield changed")
 
