@@ -30,7 +30,7 @@ end)
 --pause game if unpaused, unpause game if paused
 local function pause_toggle()
     --when game.tick_paused is set to false, the next tick has no player movement
-    --[[if not game.tick_paused then
+    if not game.tick_paused then
         game.tick_paused = true
         player = game.players[1]
         for _, a in pairs(player.walking_state) do game.print(a); end
@@ -39,14 +39,14 @@ local function pause_toggle()
     end
     local controls_flow = player.gui.screen.tas_main_frame.content_frame.controls_flow
     controls_flow.tas_pause_toggle.caption = (game.tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
-    controls_flow.tas_tickadv.enabled = game.tick_paused --disable tick advance if unpaused]]--
-    if(active_toggle) then
+    controls_flow.tas_tickadv.enabled = game.tick_paused --disable tick advance if unpaused
+    --[[if(active_toggle) then
         for _,p in pairs(game.players) do p.active = false; end
         active_toggle = false
     else
         for _,p in pairs(game.players) do p.active = true; end
         active_toggle = true
-        end
+        end]]--
 end
 
 local function advance_frame()
