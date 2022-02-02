@@ -95,11 +95,11 @@ local function advance_frame()
     
     --game.ticks_to_run = 1
     
-    end
+end
 
 local function setspeed(speed)
     game.speed = speed --change game speed to new speed
-    end
+end
 
 --listen for all gui clicks
 script.on_event(defines.events.on_gui_click, function(event)
@@ -157,7 +157,7 @@ script.on_event(defines.events.on_gui_text_changed, function(event)
         --perform following code for all players
         for i, _ in pairs(game.players) do
             player = game.players[i]
-        local tas_gamespeed_slider = player.gui.screen.tas_main_frame.content_frame.controls_flow_speed.tas_gamespeed_slider
+            local tas_gamespeed_slider = player.gui.screen.tas_main_frame.content_frame.controls_flow_speed.tas_gamespeed_slider
             tas_gamespeed_slider.slider_value = game.speed --set slider to game speed value
         end
     end
@@ -166,22 +166,22 @@ end)
 --pause/unpause on hotkey press
 script.on_event('tas-tools:pause-unpause', function(e)
     pause_toggle()
-    end)
+end)
 
 --call frame_advance on hotkey press
 script.on_event('tas-tools:frame-advance', function(e)
     if game.tick_paused then
         advance_frame()
     else
-        end
-    end)
+    end
+end)
 --call frame_advance on hotkey press
 script.on_event('tas-tools:two_frame-advance', function(e)
     if game.tick_paused then
         game.ticks_to_run = 2
     else
-        end
-    end)
+    end
+end)
 
 --toggle gui on hotkey press
 script.on_event('tas-tools:toggle-input-display', function(e)
@@ -189,5 +189,5 @@ script.on_event('tas-tools:toggle-input-display', function(e)
         tas_frame.visible = false
     else
         tas_frame.visible = true
-        end
-    end)
+    end
+end)
