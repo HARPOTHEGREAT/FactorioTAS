@@ -109,43 +109,49 @@ end)
 
 --listen for all gui value changes
 script.on_event(defines.events.on_gui_value_changed, function(event)
-    game.print("gui value changed")
-    if event.element.name == "tas_gamespeed_slider" then --check if the value change was for the gamespeed slider
-        game.print("slider changed")
-        local new_speed_value = event.element.slider_value --get updated slider value
+    for i, _ in pairs(game.players) do
+        player = game.players[i]
+        game.print("gui value changed")
+        if event.element.name == "tas_gamespeed_slider" then --check if the value change was for the gamespeed slider
+            game.print("slider changed")
+            local new_speed_value = event.element.slider_value --get updated slider value
 
-        local controls_flow = player.gui.screen.tas_main_frame.content_frame.controls_flow_speed
-        controls_flow.tas_gamespeed_textfield.text = tostring(new_speed_value) --paste slider value into gamespeed textfield
+            local controls_flow = player.gui.screen.tas_main_frame.content_frame.controls_flow_speed
+            controls_flow.tas_gamespeed_textfield.text = tostring(new_speed_value) --paste slider value into gamespeed textfield
+        end
     end
 end)
 
 --listen for all gui text edits
 script.on_event(defines.events.on_gui_text_changed, function(event)
     game.print("gui text changed")
-    if event.element.name == "tas_gamespeed_textfield" then --check if the text edit was for the gamespeed textfield
-        game.print("textfield changed")
+    for i, _ in pairs(game.players) do
+        player = game.players[i]
+        if event.element.name == "tas_gamespeed_textfield" then --check if the text edit was for the gamespeed textfield
+            game.print("textfield changed")
 
-        local new_speed_count = tonumber(event.element.text) or 1 --get updated text and convert to number, set to 1 if blank
-        local capped_speed_count --initialize slider count
-        local tas_gamespeed_slider = player.gui.screen.tas_main_frame.content_frame.controls_flow_speed.tas_gamespeed_slider
-        local slider_min = get_slider_minimum(tas_gamespeed_slider)
-        local slider_max = get_slider_maximum(tas_gamespeed_slider)
-            
-        -- ensure slider is only set to values within it's range
-        if new_speed_count > slider_max then --if more than slider maximum, set to maximum
-            capped_speed_count = slider_max
-            game.print("new value too high")
-        elseif new_speed_count < slider_min then --if less than slider minimum, set to slider minimum
-            capped_speed_count = slider_min
-            game.print("new value too low")
-        else
-            capped_speed_count = new_speed_count --else, use actual value
-            game.print("new value accepted")
+            local new_speed_count = tonumber(event.element.text) or 1 --get updated text and convert to number, set to 1 if blank
+            local capped_speed_count --initialize slider count
+            local tas_gamespeed_slider = player.gui.screen.tas_main_frame.content_frame.controls_flow_speed.tas_gamespeed_slider
+            local slider_min = get_slider_minimum(tas_gamespeed_slider)
+            local slider_max = get_slider_maximum(tas_gamespeed_slider)
+
+            -- ensure slider is only set to values within it's range
+            if new_speed_count > slider_max then --if more than slider maximum, set to maximum
+                capped_speed_count = slider_max
+                game.print("new value too high")
+            elseif new_speed_count < slider_min then --if less than slider minimum, set to slider minimum
+                capped_speed_count = slider_min
+                game.print("new value too low")
+            else
+                capped_speed_count = new_speed_count --else, use actual value
+                game.print("new value accepted")
+            end
+
+
+            tas_gamespeed_slider.slider_value = capped_speed_count --set slider to new, capped value
+            game.print("slider updated")
         end
-
-        
-        tas_gamespeed_slider.slider_value = capped_speed_count --set slider to new, capped value
-        game.print("slider updated")
     end
 end)
 
