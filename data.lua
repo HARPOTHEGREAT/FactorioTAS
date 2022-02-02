@@ -13,6 +13,13 @@ data:extend({
       consuming = nil,
       key_sequence = 'KP_PERIOD',
       },
+        
+    {
+      type = 'custom-input',
+      name = 'tas-tools:two_frame-advance',
+      consuming = nil,
+      key_sequence = 'KP_3',
+      },
     
     {
       type = 'custom-input',
