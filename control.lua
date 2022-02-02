@@ -27,7 +27,7 @@ script.on_event(defines.events.on_player_created, function(event)
     controls_flow_pause.add{type="button", name="tas_tickadv", caption={"tas.tickadv"}} --add button to advance one tick while paused
     controls_flow_pause.tas_tickadv.enabled = false --make advance tick start disabled
         
-    controls_flow_speed.add{type="slider", name="tas_gamespeed_slider", value=1, minimum_value=0.01, maximum_value=10, style="notched_slider"} --add gamespeed slider
+    controls_flow_speed.add{type="slider", name="tas_gamespeed_slider", value=1, minimum_value=0.01, maximum_value=2, value_step=0.01, discrete_values=false, style="notched_slider"} --add gamespeed slider
     controls_flow_speed.add{type="textfield", name="tas_gamespeed_textfield", text="1", numeric=true, allow_decimal=true, allow_negative=false, style="tas_controls_textfield"} --add gamespeed textfield
 end)
 
