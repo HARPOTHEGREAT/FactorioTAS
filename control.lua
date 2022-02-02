@@ -112,7 +112,7 @@ script.on_event(defines.events.on_gui_value_changed, function(event)
     for i, _ in pairs(game.players) do
         player = game.players[i]
         if event.element.name == "tas_gamespeed_slider" then --check if the value change was for the gamespeed slider
-            game.print("slider changed")
+            game.print("slider changed to " .. event.element.slider_value)
             local new_speed_value = event.element.slider_value --get updated slider value
 
             local controls_flow = player.gui.screen.tas_main_frame.content_frame.controls_flow_speed
@@ -127,7 +127,7 @@ script.on_event(defines.events.on_gui_text_changed, function(event)
         player = game.players[i]
         if event.element.name == "tas_gamespeed_textfield" then --check if the text edit was for the gamespeed textfield
 
-            local new_speed_count = tonumber(event.element.text) or 1 --get updated text and convert to number, set to 1 if blank
+            local new_speed_count = tonumber(event.element.text) or 1 --get updated text and convert to number, set to 1 if NaN
             local capped_speed_count --initialize slider count
             local tas_gamespeed_slider = player.gui.screen.tas_main_frame.content_frame.controls_flow_speed.tas_gamespeed_slider
             local slider_min = tas_gamespeed_slider.minimum_value
