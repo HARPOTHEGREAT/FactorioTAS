@@ -7,6 +7,7 @@ script.on_init(function()
     end
     global.players = {} --initialize a table in global for each player
     current_tick = 0 --initialize current_tick for use in advance_frame
+    active_toggle = true --initialize a toggle for active/inactive
 end)
 
 --create tas interface panel on character creation
@@ -79,7 +80,15 @@ local function advance_frame()
     end
     ]]--
     
-    game.ticks_to_run = 1
+    --game.ticks_to_run = 1
+    if(active_toggle) then
+        for _,p in pairs(game.players) do p.active = false; end
+        active_toggle = false
+    else
+        for _,p in pairs(game.players) do p.active = true; end
+        active_toggle = true
+        end
+    
     
     end
 
