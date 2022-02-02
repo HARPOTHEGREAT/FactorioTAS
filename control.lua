@@ -79,6 +79,7 @@ local function advance_frame()
     end
     ]]--
     
+    game.ticks_to_run = 1
     
     end
 
