@@ -20,11 +20,15 @@ script.on_event(defines.events.on_player_created, function(event)
     tas_frame.auto_center = false --make sure frame does not cover character
     
     local content_frame = tas_frame.add{type="frame", name="content_frame", direction="vertical", style="tas_content_frame"} --set frame style
-    local controls_flow = content_frame.add{type="flow", name="controls_flow", direction="horizontal", style="tas_controls_flow"} --set flow style
+    local controls_flow_pause = content_frame.add{type="flow", name="controls_flow", direction="horizontal", style="tas_controls_flow"} --set flow style
+    local controls_flow_speed = content_frame.add{type="flow", name="controls_flow", direction="horizontal", style="tas_controls_flow"} --set flow style
 
-    controls_flow.add{type="button", name="tas_pause_toggle", caption={"tas.pause"}} --add button to pause/unpause
-    controls_flow.add{type="button", name="tas_tickadv", caption={"tas.tickadv"}} --add button to advance one tick while paused
-    controls_flow.tas_tickadv.enabled = false
+    controls_flow_pause.add{type="button", name="tas_pause_toggle", caption={"tas.pause"}} --add button to pause/unpause
+    controls_flow_pause.add{type="button", name="tas_tickadv", caption={"tas.tickadv"}} --add button to advance one tick while paused
+    controls_flow_pause.tas_tickadv.enabled = false
+        
+    controls_flow_speed.add{type="slider", name="tas_gamespeed_slider", value=1, minimum_value=0.01, maximum_value=10, style="notched_slider"}
+    controls_flow_speed.add{type="textfield", name="tas_gamespeed_textfield", text="1", numeric=true, allow_decimal=true, allow_negative=false, style="tas_controls_textfield"}
 end)
 
 --pause game if unpaused, unpause game if paused
