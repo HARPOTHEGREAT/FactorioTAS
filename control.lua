@@ -116,6 +116,13 @@ script.on_event('tas-tools:frame-advance', function(e)
     else
         end
     end)
+--call frame_advance on hotkey press
+script.on_event('tas-tools:two_frame-advance', function(e)
+    if game.tick_paused then
+        game.ticks_to_run = 2
+    else
+        end
+    end)
 
 --toggle gui on hotkey press
 script.on_event('tas-tools:toggle-input-display', function(e)
