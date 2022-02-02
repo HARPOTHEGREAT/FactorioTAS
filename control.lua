@@ -96,13 +96,46 @@ local function advance_frame()
     
     
     end
-
-script.on_event(defines.events.on_gui_click, function(event) --listen for all gui clicks
+--listen for all gui clicks
+script.on_event(defines.events.on_gui_click, function(event)
     if event.element.name == "tas_pause_toggle" then --check if the gui click was for the pause button
         pause_toggle()
     end
         if event.element.name == "tas_tickadv" then --check if the gui click was for the tick advance button
         advance_frame()
+    end
+end)
+
+--listen for all value changes
+script.on_event(defines.events.on_gui_value_changed, function(event)
+    if event.element.name == "tas_controls_slider" then --check if the value change was for the gamespeed slider
+
+        local new_slider_value = event.element.slider_value --get updated slider value
+
+        local controls_flow = player.gui.screen.tas_main_frame.content_frame.controls_flow_speed
+        controls_flow.tas_gamespeed_textfield.text = tostring(new_slider_value) --paste slider value into gamespeed textfield
+    end
+end)
+
+--listen for all gui text edits
+script.on_event(defines.events.on_gui_text_changed, function(event)
+    if event.element.name == "tas_controls_textfield" then --check if the text edit was for the gamespeed textfield
+
+        local new_slider_count = tonumber(event.element.text) or 1 --get updated text and convert to number, set to 1 if blank
+        local capped_slider_count
+        -- ensure slider is only set to values within it's range
+        if new_slider_count > 10 then
+            capped_slider_count = 10
+        end
+        else if new_slider_count < 0.01 then
+            capped_slider_count = 10
+        end
+        else
+            capped_slider_count = new_slider_count
+        end
+
+        local controls_flow = player.gui.screen.tas_main_frame.content_frame.controls_flow_speed
+        controls_flow.tas_gamespeed_slider.slider_value = capped_slider_count --set slider to new, capped value
     end
 end)
 
