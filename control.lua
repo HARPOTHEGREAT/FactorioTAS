@@ -31,19 +31,21 @@ script.on_event(defines.events.on_player_created, function(event)
     controls_flow_speed.add{type="textfield", name="tas_gamespeed_textfield", text="1", numeric=true, allow_decimal=true, allow_negative=false, style="slider_value_textfield"} --add gamespeed textfield
 end)
 
+--when game.tick_paused is set to false, the next tick has incredibly limited character action
 --pause game if unpaused, unpause game if paused
 local function pause_toggle()
-    --when game.tick_paused is set to false, the next tick has incredibly limited character action
-    if not game.tick_paused then
-        game.tick_paused = true
-        player = game.players[1]
-        for _, a in pairs(player.walking_state) do game.print(a); end
-    else
-        game.tick_paused = false
+    for _, i in pairs(game.players) do
+        if not game.tick_paused then
+            game.tick_paused = true
+            player = game.players[i]
+            for _, a in pairs(player.walking_state) do game.print(a); end
+        else
+            game.tick_paused = false
+        end
+        local controls_flow_pause = player.gui.screen.tas_main_frame.content_frame.controls_flow_pause
+        controls_flow_pause.tas_pause_toggle.caption = (game.tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
+        controls_flow_pause.tas_tickadv.enabled = game.tick_paused --disable tick advance if unpaused
     end
-    local controls_flow_pause = player.gui.screen.tas_main_frame.content_frame.controls_flow_pause
-    controls_flow_pause.tas_pause_toggle.caption = (game.tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
-    controls_flow_pause.tas_tickadv.enabled = game.tick_paused --disable tick advance if unpaused
     --[[if(active_toggle) then
         for _,p in pairs(game.players) do p.active = false; end
         active_toggle = false
