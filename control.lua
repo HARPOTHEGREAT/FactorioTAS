@@ -34,11 +34,11 @@ end)
 --when game.tick_paused is set to false, the next tick has incredibly limited character action
 --pause game if unpaused, unpause game if paused
 local function pause_toggle()
-    for _, i in pairs(game.players) do
+    for i, _ in pairs(game.players) do
+        player = game.players[i]
         if not game.tick_paused then
             game.tick_paused = true
-            player = game.players[i]
-            for _, a in pairs(player.walking_state) do game.print(a); end
+            for j, a in pairs(player.walking_state) do game.print(a); end
         else
             game.tick_paused = false
         end
