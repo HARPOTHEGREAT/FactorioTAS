@@ -116,7 +116,6 @@ script.on_event(defines.events.on_gui_value_changed, function(event)
     --initialize some identifiers
     if event.element.name == "tas_gamespeed_slider" then --check if the value change was for the gamespeed slider
         local new_speed_value = event.element.slider_value --get updated slider value
-        local controls_flow = player.gui.screen.tas_main_frame.content_frame.controls_flow_speed
 
         --first, set gamespeed to new value
         setspeed(new_speed_value)
@@ -124,6 +123,7 @@ script.on_event(defines.events.on_gui_value_changed, function(event)
         --next, update all guis to new value
         for i, _ in pairs(game.players) do
             player = game.players[i]
+            local controls_flow = player.gui.screen.tas_main_frame.content_frame.controls_flow_speed
             controls_flow.tas_gamespeed_textfield.text = tostring(game.speed) --paste game speed value into gamespeed textfield
         end
     end
@@ -135,7 +135,6 @@ script.on_event(defines.events.on_gui_text_changed, function(event)
         --initialize some identifiers
         local new_speed_count = tonumber(event.element.text) or 1 --get updated text and convert to number, set to 1 if NaN
         local capped_speed_count --initialize slider count
-        local tas_gamespeed_slider = player.gui.screen.tas_main_frame.content_frame.controls_flow_speed.tas_gamespeed_slider
         game.print("new_speed_count will be " .. new_speed_count)
 
         --first, set gamespeed to new value
@@ -158,6 +157,7 @@ script.on_event(defines.events.on_gui_text_changed, function(event)
         --perform following code for all players
         for i, _ in pairs(game.players) do
             player = game.players[i]
+        local tas_gamespeed_slider = player.gui.screen.tas_main_frame.content_frame.controls_flow_speed.tas_gamespeed_slider
             tas_gamespeed_slider.slider_value = game.speed --set slider to game speed value
         end
     end
