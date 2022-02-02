@@ -122,14 +122,13 @@ script.on_event(defines.events.on_gui_text_changed, function(event)
     if event.element.name == "tas_controls_textfield" then --check if the text edit was for the gamespeed textfield
 
         local new_slider_count = tonumber(event.element.text) or 1 --get updated text and convert to number, set to 1 if blank
-        local capped_slider_count
+        local capped_slider_count --initialize slider count
+            
         -- ensure slider is only set to values within it's range
         if new_slider_count > 10 then
             capped_slider_count = 10
-        end
-        else if new_slider_count < 0.01 then
+        elseif new_slider_count < 0.01 then
             capped_slider_count = 10
-        end
         else
             capped_slider_count = new_slider_count
         end
