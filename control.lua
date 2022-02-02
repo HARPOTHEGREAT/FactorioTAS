@@ -97,6 +97,10 @@ local function advance_frame()
     
     end
 
+local function setspeed(speed)
+    game.speed = speed --change game speed to new speed
+    end
+
 --listen for all gui clicks
 script.on_event(defines.events.on_gui_click, function(event)
     if event.element.name == "tas_pause_toggle" then --check if the gui click was for the pause button
@@ -109,43 +113,52 @@ end)
 
 --listen for all gui value changes
 script.on_event(defines.events.on_gui_value_changed, function(event)
-    for i, _ in pairs(game.players) do
-        player = game.players[i]
-        if event.element.name == "tas_gamespeed_slider" then --check if the value change was for the gamespeed slider
-            game.print("slider changed to " .. event.element.slider_value)
-            local new_speed_value = event.element.slider_value --get updated slider value
+    --initialize some identifiers
+    if event.element.name == "tas_gamespeed_slider" then --check if the value change was for the gamespeed slider
+        local new_speed_value = event.element.slider_value --get updated slider value
+        local controls_flow = player.gui.screen.tas_main_frame.content_frame.controls_flow_speed
 
-            local controls_flow = player.gui.screen.tas_main_frame.content_frame.controls_flow_speed
-            controls_flow.tas_gamespeed_textfield.text = tostring(new_speed_value) --paste slider value into gamespeed textfield
+        --first, set gamespeed to new value
+        setspeed(new_speed_value)
+        
+        --next, update all guis to new value
+        for i, _ in pairs(game.players) do
+            player = game.players[i]
+            controls_flow.tas_gamespeed_textfield.text = tostring(game.speed) --paste game speed value into gamespeed textfield
         end
     end
 end)
 
 --listen for all gui text edits
 script.on_event(defines.events.on_gui_text_changed, function(event)
-    for i, _ in pairs(game.players) do
-        player = game.players[i]
-        if event.element.name == "tas_gamespeed_textfield" then --check if the text edit was for the gamespeed textfield
+     if event.element.name == "tas_gamespeed_textfield" then --check if the text edit was for the gamespeed textfield
+        --initialize some identifiers
+        local new_speed_count = tonumber(event.element.text) or 1 --get updated text and convert to number, set to 1 if NaN
+        local capped_speed_count --initialize slider count
+        local tas_gamespeed_slider = player.gui.screen.tas_main_frame.content_frame.controls_flow_speed.tas_gamespeed_slider
+        game.print("new_speed_count will be " .. new_speed_count)
 
-            local new_speed_count = tonumber(event.element.text) or 1 --get updated text and convert to number, set to 1 if NaN
-            local capped_speed_count --initialize slider count
-            local tas_gamespeed_slider = player.gui.screen.tas_main_frame.content_frame.controls_flow_speed.tas_gamespeed_slider
-            game.print("new_speed_count = " .. new_speed_count)
+        --first, set gamespeed to new value
+        --ensure slider is only set to values within it's range
+        if new_speed_count > 2 then --if more than slider maximum, set to maximum
+            capped_speed_count = 2
+            game.print("new value too high, tickspeed set to 2")
+        elseif new_speed_count < 0.01 then --if less than slider minimum, set to slider minimum
+            capped_speed_count = 0.01
+            game.print("new value too low, tickspeed set to 0.01")
+        else
+            capped_speed_count = new_speed_count --else, use actual value
+            game.print("new value accepted")
+        end
 
-            -- ensure slider is only set to values within it's range
-            if new_speed_count > 10 then --if more than slider maximum, set to maximum
-                capped_speed_count = 10
-                game.print("new value too high")
-            elseif new_speed_count < 0.01 then --if less than slider minimum, set to slider minimum
-                capped_speed_count = 0.01
-                game.print("new value too low")
-            else
-                capped_speed_count = new_speed_count --else, use actual value
-                game.print("new value accepted")
-            end
+        setspeed(capped_speed_count) --change game speed
+        game.print("speed is now " .. game.speed)
 
-            tas_gamespeed_slider.slider_value = capped_speed_count --set slider to new, capped value
-            game.print("slider updated")
+        --next, update all guis to new value
+        --perform following code for all players
+        for i, _ in pairs(game.players) do
+            player = game.players[i]
+            tas_gamespeed_slider.slider_value = game.speed --set slider to game speed value
         end
     end
 end)
