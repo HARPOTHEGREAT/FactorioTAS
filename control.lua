@@ -25,15 +25,15 @@ script.on_event(defines.events.on_player_created, function(event)
 
     controls_flow_pause.add{type="button", name="tas_pause_toggle", caption={"tas.pause"}} --add button to pause/unpause
     controls_flow_pause.add{type="button", name="tas_tickadv", caption={"tas.tickadv"}} --add button to advance one tick while paused
-    controls_flow_pause.tas_tickadv.enabled = false
+    controls_flow_pause.tas_tickadv.enabled = false --make advance tick start disabled
         
-    controls_flow_speed.add{type="slider", name="tas_gamespeed_slider", value=1, minimum_value=0.01, maximum_value=10, style="notched_slider"}
-    controls_flow_speed.add{type="textfield", name="tas_gamespeed_textfield", text="1", numeric=true, allow_decimal=true, allow_negative=false, style="tas_controls_textfield"}
+    controls_flow_speed.add{type="slider", name="tas_gamespeed_slider", value=1, minimum_value=0.01, maximum_value=10, style="notched_slider"} --add gamespeed slider
+    controls_flow_speed.add{type="textfield", name="tas_gamespeed_textfield", text="1", numeric=true, allow_decimal=true, allow_negative=false, style="tas_controls_textfield"} --add gamespeed textfield
 end)
 
 --pause game if unpaused, unpause game if paused
 local function pause_toggle()
-    --when game.tick_paused is set to false, the next tick has no player movement
+    --when game.tick_paused is set to false, the next tick has incredibly limited character action
     if not game.tick_paused then
         game.tick_paused = true
         player = game.players[1]
@@ -41,9 +41,9 @@ local function pause_toggle()
     else
         game.tick_paused = false
     end
-    local controls_flow = player.gui.screen.tas_main_frame.content_frame.controls_flow
-    controls_flow.tas_pause_toggle.caption = (game.tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
-    controls_flow.tas_tickadv.enabled = game.tick_paused --disable tick advance if unpaused
+    local controls_flow_pause = player.gui.screen.tas_main_frame.content_frame.controls_flow_pause
+    controls_flow_pause.tas_pause_toggle.caption = (game.tick_paused) and {"tas.unpause"} or {"tas.pause"} --flip button label between pause and unpause
+    controls_flow_pause.tas_tickadv.enabled = game.tick_paused --disable tick advance if unpaused
     --[[if(active_toggle) then
         for _,p in pairs(game.players) do p.active = false; end
         active_toggle = false
@@ -96,6 +96,7 @@ local function advance_frame()
     
     
     end
+
 --listen for all gui clicks
 script.on_event(defines.events.on_gui_click, function(event)
     if event.element.name == "tas_pause_toggle" then --check if the gui click was for the pause button
@@ -106,14 +107,14 @@ script.on_event(defines.events.on_gui_click, function(event)
     end
 end)
 
---listen for all value changes
+--listen for all gui value changes
 script.on_event(defines.events.on_gui_value_changed, function(event)
     if event.element.name == "tas_controls_slider" then --check if the value change was for the gamespeed slider
 
-        local new_slider_value = event.element.slider_value --get updated slider value
+        local new_speed_value = event.element.slider_value --get updated slider value
 
         local controls_flow = player.gui.screen.tas_main_frame.content_frame.controls_flow_speed
-        controls_flow.tas_gamespeed_textfield.text = tostring(new_slider_value) --paste slider value into gamespeed textfield
+        controls_flow.tas_gamespeed_textfield.text = tostring(new_speed_value) --paste slider value into gamespeed textfield
     end
 end)
 
@@ -121,24 +122,25 @@ end)
 script.on_event(defines.events.on_gui_text_changed, function(event)
     if event.element.name == "tas_controls_textfield" then --check if the text edit was for the gamespeed textfield
 
-        local new_slider_count = tonumber(event.element.text) or 1 --get updated text and convert to number, set to 1 if blank
-        local capped_slider_count --initialize slider count
+        local new_speed_count = tonumber(event.element.text) or 1 --get updated text and convert to number, set to 1 if blank
+        local capped_speed_count --initialize slider count
+        local tas_gamespeed_slider = player.gui.screen.tas_main_frame.content_frame.controls_flow_speed.tas_gamespeed_slider
+        local slider_min = get_slider_minimum(tas_gamespeed_slider)
+        local slider_max = get_slider_maximum(tas_gamespeed_slider)
             
         -- ensure slider is only set to values within it's range
-        if new_slider_count > 10 then
-            capped_slider_count = 10
-        elseif new_slider_count < 0.01 then
-            capped_slider_count = 10
+        if new_speed_count > slider_max then --if more than slider maximum, set to maximum
+            capped_speed_count = slider_max
+        elseif new_speed_count < slider_min then --if less than slider minimum, set to slider minimum
+            capped_speed_count = slider_min
         else
-            capped_slider_count = new_slider_count
+            capped_speed_count = new_speed_count --else, use actual value
         end
 
-        local controls_flow = player.gui.screen.tas_main_frame.content_frame.controls_flow_speed
-        controls_flow.tas_gamespeed_slider.slider_value = capped_slider_count --set slider to new, capped value
+        
+        tas_gamespeed_slider.slider_value = capped_speed_count --set slider to new, capped value
     end
 end)
-
--- advance frame moved to line 40, before any button/hotkey event listeners
 
 --pause/unpause on hotkey press
 script.on_event('tas-tools:pause-unpause', function(e)
