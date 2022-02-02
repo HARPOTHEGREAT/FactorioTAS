@@ -27,7 +27,7 @@ script.on_event(defines.events.on_player_created, function(event)
     controls_flow_pause.add{type="button", name="tas_tickadv", caption={"tas.tickadv"}} --add button to advance one tick while paused
     controls_flow_pause.tas_tickadv.enabled = false --make advance tick start disabled
         
-    controls_flow_speed.add{type="slider", name="tas_gamespeed_slider", value=1, minimum_value=0.01, maximum_value=2, value_step=0.01, discrete_values=false, style="notched_slider"} --add gamespeed slider
+    controls_flow_speed.add{type="slider", name="tas_gamespeed_slider", value=1, minimum_value=0.01, maximum_value=2, value_step=0.01, discrete_values=true, style="notched_slider"} --add gamespeed slider
     controls_flow_speed.add{type="textfield", name="tas_gamespeed_textfield", text="1", numeric=true, allow_decimal=true, allow_negative=false, style="slider_value_textfield"} --add gamespeed textfield
 end)
 
@@ -130,23 +130,19 @@ script.on_event(defines.events.on_gui_text_changed, function(event)
             local new_speed_count = tonumber(event.element.text) or 1 --get updated text and convert to number, set to 1 if NaN
             local capped_speed_count --initialize slider count
             local tas_gamespeed_slider = player.gui.screen.tas_main_frame.content_frame.controls_flow_speed.tas_gamespeed_slider
-            local slider_min = tas_gamespeed_slider.minimum_value
-            local slider_max = tas_gamespeed_slider.maximum_value
             game.print("new_speed_count = " .. new_speed_count)
-            game.print("slider_min = " .. slider_min .. ", should be 0.01")
 
             -- ensure slider is only set to values within it's range
-            if new_speed_count > slider_max then --if more than slider maximum, set to maximum
-                capped_speed_count = slider_max
+            if new_speed_count > 10 then --if more than slider maximum, set to maximum
+                capped_speed_count = 10
                 game.print("new value too high")
-            elseif new_speed_count < slider_min then --if less than slider minimum, set to slider minimum
-                capped_speed_count = slider_min
+            elseif new_speed_count < 0.01 then --if less than slider minimum, set to slider minimum
+                capped_speed_count = 0.01
                 game.print("new value too low")
             else
                 capped_speed_count = new_speed_count --else, use actual value
                 game.print("new value accepted")
             end
-
 
             tas_gamespeed_slider.slider_value = capped_speed_count --set slider to new, capped value
             game.print("slider updated")
